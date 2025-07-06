@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cyberpunk CPanel - Terdeface</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: black;
+      color: #00ffe5;
+      font-family: 'Orbitron', monospace;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      padding: 30px;
+      background: rgba(0,0,0,0.7);
+      border: 2px solid #00ffe5;
+      border-radius: 15px;
+      box-shadow: 0 0 25px #00ffe5;
+      z-index: 3;
+    }
+
+    input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      background: #1e1e2f;
+      color: #00ffe5;
+      border: 1px solid #00ffe5;
+      font-family: 'Orbitron', monospace;
+    }
+
+    button {
+      background: #ff00ff;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff66ff;
+    }
+
+    .hidden { display: none; }
+
+    /* DEFACE BOX */
+    #deface {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: #ff0040;
+      padding: 20px;
+      font-size: 1rem;
+      animation: flash 0.2s infinite alternate;
+    }
+
+    @keyframes flash {
+      0% { background-color: black; }
+      100% { background-color: #1a001a; }
+    }
+
+    .terminal {
+      white-space: pre-wrap;
+      font-size: 14px;
+      color: #00ffcc;
+      margin-top: 20px;
+    }
+
+    .error-random {
+      position: absolute;
+      color: red;
+      font-size: 12px;
+      text-shadow: 0 0 3px red;
+      pointer-events: none;
+      animation: fadeOut 2s forwards;
+      font-family: monospace;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Form -->
+  <div class="center" id="login">
+    <h2 style="color:#ff00ff; text-align:center;">Cyberpunk CPanel</h2>
+    <input type="text" id="userInput" placeholder="Username">
+    <input type="password" id="passInput" placeholder="Password">
+    <button onclick="hack()">LOGIN</button>
+  </div>
+
+  <!-- Deface Screen -->
+  <div id="deface" class="hidden">
+    <h1>~ SYSTEM TELAH DIRETAS ~</h1>
+    <p>by <b>ZainXploit</b> | Systemmu lemah, sayang...</p>
+    <div class="terminal" id="terminalOutput"></div>
+  </div>
+
+  <!-- Sound -->
+  <audio id="bgm" src="https://files.catbox.moe/85cvm2.mp3" loop></audio>
+  <audio id="glitchSound" src="https://files.catbox.moe/nlufyr.mp3"></audio>
+
+  <script>
+    function hack() {
+      const user = document.getElementById("userInput").value;
+      const pass = document.getElementById("passInput").value;
+
+      const validUsername = "admin";
+      const validPassword = "zain123";
+
+      if (user === validUsername && pass === validPassword) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("deface").classList.remove("hidden");
+        document.getElementById("bgm").play();
+        document.getElementById("glitchSound").play();
+        startTyping();
+        startRandomErrors();
+      } else {
+        alert("Username atau Password salah!");
+      }
+    }
+
+    // Terminal typing effect
+    const lines = [
+      "[ZainXploit] Mengakses sistem...",
+      "Membobol database...",
+      "Injecting shell script...",
+      "Bypass admin login...",
+      "Mengunduh file rahasia...",
+      "Menghapus jejak...",
+      "System berhasil dikuasai!",
+      "Memulai mode deface..."
+    ];
+    let i = 0;
+    function startTyping() {
+      if (i < lines.length) {
+        const terminal = document.getElementById("terminalOutput");
+        terminal.innerHTML += lines[i] + "\n";
+        i++;
+        setTimeout(startTyping, 1000);
+      }
+    }
+
+    // Error animations
+    function startRandomErrors() {
+      setInterval(() => {
+        const err = document.createElement('div');
+        err.classList.add('error-random');
+        err.textContent = randomError();
+        err.style.top = Math.random() * 100 + "vh";
+        err.style.left = Math.random() * 100 + "vw";
+        err.style.fontSize = (10 + Math.random() * 8) + "px";
+        document.body.appendChild(err);
+        setTimeout(() => err.remove(), 2000);
+      }, 400);
+    }
+
+    function randomError() {
+      const errors = [
+        "ERROR 0x00FF",
+        "System breach!",
+        "Access Violation",
+        "Bypass success",
+        "Root access granted",
+        "System compromised",
+        "Firewall disabled",
+        "Payload injected"
+      ];
+      return errors[Math.floor(Math.random() * errors.length)];
+    }
+  </script>
+
+</body>
+</html>
